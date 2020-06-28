@@ -30,14 +30,24 @@ def simple_return(sec):
     data = data_reader(sec)
     simple_return = shifted(data) - 1
     simple_annual_return = simple_return.mean() * 250
-    return print(f'{simple_annual_return[sec] * 100:.3f}%')
+    return print(f'{simple_annual_return[sec] * 100:.4f}%')
 
 def log_return(sec):
     # log returns are better for looking at one security over a period of time.
     data = data_reader(sec)
     log_return = np.log(shifted(data))
     log_annual_return = log_return.mean() * 250
-    return print(f'{log_annual_return[sec] * 100:.3f}%')
+    return print(f'{log_annual_return[sec] * 100:.4f}%')
+
+
+# function that checks how volatile a security is.
+# volatility is calculated through standard deviation. 
+# Volatility shows how often a security goes above or below its standard deviation. 
+def sec_volatility(*sec):
+    data = data_reader(*sec)
+    sec_returns = np.log(shifted(data))
+    annual_volatility = sec_returns.std() * 250 ** .5
+    return print(f'{annual_volatility * 100}')
 
 
 # indices are clusters of securities in one place that are usually market indicators.
@@ -61,22 +71,31 @@ def portfolio_return(weights,*stocks):
         p_return= (shifted(data) - 1)
         annual_returns = p_return.mean() * 250
         folio_return = np.dot(annual_returns,weights)
-        return print(f'{folio_return * 100:.3f}%')
+        return print(f'{folio_return * 100:.4f}%')
     else:
-        print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same. ')
+       return print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
 # weights = [.5,.5]
 # portfolio_return(weights,'PG','MSFT')
 
-# function that checks how volatile a security is.
-# volatility is calculated through standard deviation. 
-# Volatility shows how often a security goes above or below its standard deviation. 
-def how_volatile(*sec):
+# function that takes the securites in your portfolio by the weight they hold in your portfolio.
+# returns the volatility of your whole portfolio. 
+def portfolio_volatility(weights,*sec):
     data = data_reader(*sec)
     sec_returns = np.log(shifted(data))
-    annual_volatility = sec_returns.std() * 250 ** .5
-    return print(f'{annual_volatility * 100}')
+    if len(weights) == len(sec) and sum(weights) == 1:
+        annual_covariance = sec_returns.cov() * 250
+        array_weights = np.array(weights)
+        pfolio_volatilty = (np.dot(array_weights.T, np.dot(sec_returns.cov() * 250, array_weights))) ** 0.5
+        return print(f'{pfolio_volatilty * 100:.4f} %')
+    else:
+         return print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
 
-how_volatile('MSFT','AAPL')
+weights = [.5,.4,]
+portfolio_volatility(weights,'AAPL','MSFT')
+
+    
+
+    
 
 
 
