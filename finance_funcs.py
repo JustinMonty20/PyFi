@@ -29,7 +29,7 @@ def simple_return(sec):
     data = data_reader(sec)
     simple_return = shifted(data) - 1
     simple_annual_return = simple_return.mean() * 250
-    return print(f'{simple_annual_return * 100}')
+    return print(simple_annual_return[sec] * 100)
 
 simple_return('MSFT')
 def log_return(sec):
@@ -37,7 +37,7 @@ def log_return(sec):
     data = data_reader(sec)
     log_return = np.log(shifted(data))
     log_annual_return = log_return.mean() * 250
-    return print(f'{log_annual_return * 100}')
+    return print(log_annual_return[sec] * 100)
 
 # indices are clusters of securities in one place that are usually market indicators.
 # 3 most heard of index funds are dowjones, s&p 500, & nasdaq. 
