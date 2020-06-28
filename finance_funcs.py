@@ -88,7 +88,7 @@ def portfolio_volatility(weights,*sec):
         pfolio_volatilty = (np.dot(array_weights.T, np.dot(sec_returns.cov() * 250, array_weights))) ** 0.5
         return print(f'{pfolio_volatilty * 100:.4f} %')
     else:
-         return print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
+         return print('Make sure your weights add to 1 and the lengths of sec and weights you are passing in are the same.')
 
 weights = [.5,.4,]
 portfolio_volatility(weights,'AAPL','MSFT')
