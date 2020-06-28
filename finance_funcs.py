@@ -39,14 +39,13 @@ def log_return(sec):
 # function to calculate the return of however many indices you would like. 
 # you can tell an index from a stock usually by the little carrot. AAPL vs ^GSCP (Apple vs S&P 500)
 
-major_indices = ['^IXIC','^GSPC','^DJI',]
-def market_indicators(l_of_indices):
-    data = data_reader(l_of_indices)
+def market_indicators(*indices):
+    data = data_reader(*indices)
     id_return = (data / data.shift(1)-1)
     annual_id_return = id_return.mean() * 250
     return print(f'{annual_id_return * 100}')
 
-market_indicators(major_indices)
+market_indicators('^IXIC','^GSPC','^DJI',)
 
 
 
