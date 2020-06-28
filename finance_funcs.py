@@ -73,8 +73,8 @@ def portfolio_return(weights,*stocks):
         folio_return = np.dot(annual_returns,weights)
         return print(f'{folio_return * 100:.4f}%')
     else:
-       return print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
-# weights = [.5,.5]
+       raise RuntimeError('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
+# weights = [.5,.4]
 # portfolio_return(weights,'PG','MSFT')
 
 # function that takes the securites in your portfolio by the weight they hold in your portfolio.
@@ -88,10 +88,10 @@ def portfolio_volatility(weights,*sec):
         pfolio_volatilty = (np.dot(array_weights.T, np.dot(sec_returns.cov() * 250, array_weights))) ** 0.5
         return print(f'{pfolio_volatilty * 100:.4f} %')
     else:
-         return print('Make sure your weights add to 1 and the lengths of sec and weights you are passing in are the same.')
+         raise RuntimeError('Make sure your weights add to 1 and the lengths of sec and weights you are passing in are the same.')
 
-weights = [.5,.4,]
-portfolio_volatility(weights,'AAPL','MSFT')
+# weights = [.5,.4,]
+# portfolio_volatility(weights,'AAPL','MSFT')
 
     
 
