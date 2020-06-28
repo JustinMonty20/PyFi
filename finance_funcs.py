@@ -29,15 +29,15 @@ def simple_return(sec):
     data = data_reader(sec)
     simple_return = shifted(data) - 1
     simple_annual_return = simple_return.mean() * 250
-    return print(simple_annual_return[sec] * 100)
+    return print(f'{simple_annual_return[sec] * 100:.3f}%')
 
-simple_return('MSFT')
 def log_return(sec):
     # log returns are better for looking at one security over a period of time.
     data = data_reader(sec)
     log_return = np.log(shifted(data))
     log_annual_return = log_return.mean() * 250
-    return print(log_annual_return[sec] * 100)
+    return print(f'{log_annual_return[sec] * 100:.3f}%')
+
 
 # indices are clusters of securities in one place that are usually market indicators.
 # 3 most heard of index funds are dowjones, s&p 500, & nasdaq. 
@@ -59,7 +59,7 @@ def portfolio_return(weights,*stocks):
         p_return= (shifted(data) - 1)
         annual_returns = p_return.mean() * 250
         folio_return = np.dot(annual_returns,weights)
-        return print(f'{folio_return * 100:.3f}')
+        return print(f'{folio_return * 100:.3f}%')
     else:
         print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same. ')
     
