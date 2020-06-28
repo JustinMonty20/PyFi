@@ -18,18 +18,24 @@ def data_reader(*securities):
         data[item] = wb.DataReader(item,start=start,data_source=yahoo)['Adj Close']
     return data
 
+# function to get rid of some typing. 
+def shifted(data):
+    return (data / data.shift(1))
+
+
 # annual simple return of the passed in security. 
 def simple_return(sec):
     # simple returns on stocks are better for looking at multiple stocks over the same timeframe. 
     data = data_reader(sec)
-    simple_return = data / data.shift(1) - 1
+    simple_return = shifted(data) - 1
     simple_annual_return = simple_return.mean() * 250
     return print(f'{simple_annual_return * 100}')
 
+simple_return('MSFT')
 def log_return(sec):
     # log returns are better for looking at one security over a period of time.
     data = data_reader(sec)
-    log_return = np.log(data / data.shift(1))
+    log_return = np.log(shifted(data))
     log_annual_return = log_return.mean() * 250
     return print(f'{log_annual_return * 100}')
 
@@ -41,14 +47,16 @@ def log_return(sec):
 
 def market_indicators(*indices):
     data = data_reader(*indices)
-    id_return = (data / data.shift(1)-1)
+    id_return = (shifted(data)-1)
     annual_id_return = id_return.mean() * 250
     return print(f'{annual_id_return * 100}')
 
+# function calculates the return of your portfolio based on the stocks you pass in
+# along with the weights in your portfolio. 
 def portfolio_return(weights,*stocks):
     data = data_reader(*stocks)
     if len(weights) == len(stocks) and sum(weights) == 1:
-        p_return= (data / data.shift(1) - 1)
+        p_return= (shifted(data) - 1)
         annual_returns = p_return.mean() * 250
         folio_return = np.dot(annual_returns,weights)
         return print(f'{folio_return * 100:.3f}')
@@ -56,7 +64,7 @@ def portfolio_return(weights,*stocks):
         print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same. ')
     
 
-weights = [.5,]
+weights = [.5,.5]
 portfolio_return(weights,'PG','MSFT')
 
 
