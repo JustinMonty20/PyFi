@@ -1,29 +1,30 @@
 import pandas as pd
-import pprint
 import numpy as np
-from iexfinance.stocks import get_historical_data
-from iexfinance.stocks import Stock
-import os
-from datetime import datetime
+from pandas_datareader import data as wb
 
-# global variables one for the start and end parameters as well as the auth token needed to make API calls. 
-beginning = datetime(2015,1,1)
-finish = datetime.now()
-access = os.getenv('IEX_Token')
+# global variable to indicate the start date we are grabbing the financial data
+# along with where the data is coming from. 
+start = '2010-1-1'
+yahoo = 'yahoo'
 
-
+# all data is gathered from the Yahoo Finance through the pandas_datareader package.
 # sec stands for security. finance term for a tradeable asset. a stock is a security. 
-# need to pass in the stocks "ticker" aka the abbrevaition on trading platforms. 
+# need to pass in the stocks "ticker" aka the abbrevaition on pretty much all trading platforms. 
+
 def single_adj_close(sec):
-    data = get_historical_data(sec, start=beginning,end=finish, output_format='pandas',token=access,)['close']
+    # this functions returns the Adj Close column of the security you pass in.
+    # the Adj Close column is the data we need for all of the financial calculations we will be doing. 
+    data = wb.DataReader(sec,start=start,data_source=yahoo)['Adj Close']
     return data
 
-    
 
+
+    
+# annual simple return of the passed in security. 
 def simple_return(sec):
     data = single_adj_close(sec)
     simple_return = data / data.shift(1) - 1
-    stock_daily_return = simple_return.mean()
-    return print(f'Daily return over past 4 months {stock_daily_return * 100 :.3f}%')
+    stock_annual_return = simple_return.mean() * 250
+    return print(f'Annual simple return {stock_annual_return * 100 :.3f}%')
 
-print(single_adj_close('AAPL'))
+simple_return('MSFT')
