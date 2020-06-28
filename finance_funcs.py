@@ -45,7 +45,21 @@ def market_indicators(*indices):
     annual_id_return = id_return.mean() * 250
     return print(f'{annual_id_return * 100}')
 
-market_indicators('^IXIC','^GSPC','^DJI',)
+def portfolio_return(weights,*stocks):
+    data = data_reader(*stocks)
+    if len(weights) == len(stocks) and sum(weights) == 1:
+        p_return= (data / data.shift(1) - 1)
+        annual_returns = p_return.mean() * 250
+        folio_return = np.dot(annual_returns,weights)
+    else:
+        print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same. ')
+    return print(f'{folio_return * 100:.3f}')
+
+weights = [.5,.5]
+portfolio_return(weights,'PG','MSFT')
+
+
+        
 
 
 
