@@ -12,16 +12,17 @@ yahoo = 'yahoo'
 # all data is gathered from the Yahoo Finance through the pandas_datareader package.
 # sec stands for security. finance term for a tradeable asset. a stock is a security. 
 # need to pass in the stocks "ticker" aka the abbrevaition on pretty much all trading platforms. 
+
 def data_reader(*securities):
     data = pd.DataFrame()
     for item in securities:
         data[item] = wb.DataReader(item,start=start,data_source=yahoo)['Adj Close']
     return data
 
-# function to get rid of some typing. 
-def shifted(data):
-    return (data / data.shift(1))
 
+def shifted(data):
+    # divides each entry in the dataframe by the next entry.
+    return (data / data.shift(1))
 
 # annual simple return of the passed in security. 
 def simple_return(sec):
@@ -42,18 +43,19 @@ def log_return(sec):
 # indices are clusters of securities in one place that are usually market indicators.
 # 3 most heard of index funds are dowjones, s&p 500, & nasdaq. 
 # you can pass in any index fund that is valid on Yahoo. (Including foreign indices.)
-# function to calculate the return of however many indices you would like. 
 # you can tell an index from a stock usually by the little carrot. AAPL vs ^GSCP (Apple vs S&P 500)
 
 def market_indicators(*indices):
+    # function to calculate the return of however many indices you would like. 
     data = data_reader(*indices)
     id_return = (shifted(data)-1)
     annual_id_return = id_return.mean() * 250
     return print(f'{annual_id_return * 100}')
 
-# function calculates the return of your portfolio based on the stocks you pass in
-# along with the weights in your portfolio. 
+
 def portfolio_return(weights,*stocks):
+    # function calculates the return of your portfolio based on the stocks you pass in
+    # along with the weights in your portfolio. 
     data = data_reader(*stocks)
     if len(weights) == len(stocks) and sum(weights) == 1:
         p_return= (shifted(data) - 1)
@@ -62,10 +64,21 @@ def portfolio_return(weights,*stocks):
         return print(f'{folio_return * 100:.3f}%')
     else:
         print('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same. ')
-    
+# weights = [.5,.5]
+# portfolio_return(weights,'PG','MSFT')
 
-weights = [.5,.5]
-portfolio_return(weights,'PG','MSFT')
+# function that checks how volatile a security is.
+# volatility is calculated through standard deviation. 
+# Volatility shows how often a security goes above or below its standard deviation. 
+def how_volatile(*sec):
+    data = data_reader(*sec)
+    sec_returns = np.log(shifted(data))
+    annual_volatility = sec_returns.std() * 250 ** .5
+    return print(f'{annual_volatility * 100}')
+
+how_volatile('MSFT','AAPL')
+
+
 
 
         
