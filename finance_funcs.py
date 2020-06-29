@@ -109,7 +109,7 @@ def beta(sec,index):
         cov_with_mkt = cov.iloc[0,1]
         market_var = returns[index].var() * 250
         sec_beta = cov_with_mkt / market_var
-        return print(f'{sec_beta:.4f} %')
+        return print(f'{sec_beta:.4f}')
 
 
 
