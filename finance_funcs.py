@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import pandas_datareader.data as wb
+import requests
+from bs4 import BeautifulSoup
 
 # all figures returned are percentages
 # everything is calculated yearly. multiple by 250 because on average thats how many days the markets are open. 
@@ -109,20 +111,25 @@ def beta(sec,index):
         cov_with_mkt = cov.iloc[0,1]
         market_var = returns[index].var() * 250
         sec_beta = cov_with_mkt / market_var
-        return print(f'{sec_beta:.4f}')
+    return f'{sec_beta:.4f}'
 
+# function to webscrape the 
+def get_risk_free_rate():
+    URL = 'https://fred.stlouisfed.org/series/DGS10'
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content,'html.parser')
+    results = soup.find(id='meta-left-col')
+    yield_span = results.find(class_='series-meta-observation-value')
+    for rate in yield_span:
+       ten_year_bond_yield = float(rate)
+    return ten_year_bond_yield
 
+# calculates the expected return of a stock. 
+def expected_return(sec):
+    risk_free_rate = get_risk_free_rate()
+    sec_beta = float(beta(sec,'^GSPC'))
+    return f'{(risk_free_rate / 100) + (sec_beta * .05) * 100:.4f}%'
 
-
-    
-
-    
-
-
-
-
-        
-
-
+print(expected_return('MSFT'))
 
 
