@@ -130,6 +130,6 @@ def expected_return(sec):
     sec_beta = float(beta(sec,'^GSPC'))
     return f'{(risk_free_rate / 100) + (sec_beta * .05) * 100:.4f}%'
 
-print(expected_return('MSFT'))
+
 
 
