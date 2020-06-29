@@ -3,6 +3,8 @@ import numpy as np
 import pandas_datareader.data as wb
 
 # all figures returned are percentages
+# everything is calculated yearly. multiple by 250 because on average thats how many days the markets are open. 
+
 
 # global variable to indicate the start date we are grabbing the financial data
 # along with where the data is coming from. 
@@ -92,6 +94,25 @@ def portfolio_volatility(weights,*sec):
 
 # weights = [.5,.4,]
 # portfolio_volatility(weights,'AAPL','MSFT')
+
+# calculates the beta of a single security. need to pass in an index to compare with.
+# use one of the three major indices in the U.S. Dow Jones, NASDAQ, or S&P 500 depending on the sec.
+# Beta is a measure of the volatility of a security or a portfolio comapred tho the market as a whole.
+# Beta describes the activity of a security's returns as it responds to swings in the market. 
+def beta(sec,index):
+    if index not in ['^GSPC','^IXIC','^DJI']:
+        raise RuntimeError('use one of the three major indices in the US')
+    else:
+        data = data_reader(sec,index)
+        returns = np.log(shifted(data))
+        cov = returns.cov() * 250
+        cov_with_mkt = cov.iloc[0,1]
+        market_var = returns[index].var() * 250
+        sec_beta = cov_with_mkt / market_var
+        return print(f'{sec_beta:.4f} %')
+
+
+
 
     
 
