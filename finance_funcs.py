@@ -97,6 +97,11 @@ def portfolio_volatility(weights,*sec):
 # weights = [.5,.4,]
 # portfolio_volatility(weights,'AAPL','MSFT')
 
+
+
+""" Capital Asset Pricing Model Calculations"""
+""" CAPM describes the realtionship between systematic risk and the expected return for their assets particulary stocks"""
+
 # calculates the beta of a single security. need to pass in an index to compare with.
 # use one of the three major indices in the U.S. Dow Jones, NASDAQ, or S&P 500 depending on the sec.
 # Beta is a measure of the volatility of a security or a portfolio comapred tho the market as a whole.
@@ -125,10 +130,17 @@ def get_risk_free_rate():
     return ten_year_bond_yield
 
 # calculates the expected return of a stock. 
-def expected_return(sec):
-    risk_free_rate = get_risk_free_rate()
-    sec_beta = float(beta(sec,'^GSPC'))
+# for this function it calculates the beta of the stock based off of one of the three major indicies in the US. 
+def expected_return(sec,index):
+    if index not in ['^GSPC','^IXIC','^DJI']:
+        raise RuntimeError('use one of the three major indices in the US')
+    else:
+        risk_free_rate = get_risk_free_rate()
+        sec_beta = float(beta(sec,index))
     return f'{(risk_free_rate / 100) + (sec_beta * .05) * 100:.4f}%'
+
+def sharpe_ratio(sec,index):
+    pass
 
 
 
