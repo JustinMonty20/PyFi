@@ -118,7 +118,7 @@ def beta(sec,index):
         sec_beta = cov_with_mkt / market_var
     return f'{sec_beta:.4f}'
 
-# function to webscrape the 
+# function to webscrape the ten year bond yield and use it as the risk free rate in the beta calculation. 
 def get_risk_free_rate():
     URL = 'https://fred.stlouisfed.org/series/DGS10'
     page = requests.get(URL)
