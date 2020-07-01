@@ -2,16 +2,23 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QWidget
 
-pyfi_app = QApplication(sys.argv)
+class PyFiUi(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('PyFi')
+        self.setFixedSize(600,400)
+        self._centralWidget = QWidget(self)
+        self.setCentralWidget(self._centralWidget)
 
-window = QWidget()
-window.setWindowTitle('PyFi GUI')
-window.setGeometry(100,100,280,80)
-window.move(60,15)
-helloMsg = QLabel('<h1>PyFi </h1>',parent=window)
-helloMsg.move(60,15)
-window.show()
+def main():
+    pyfi_app = QApplication(sys.argv)
+    view = PyFiUi()
+    view.show()
+    sys.exit(pyfi_app.exec())
 
-sys.exit(pyfi_app.exec_())
+if __name__ == '__main__':
+    main()
+

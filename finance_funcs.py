@@ -53,8 +53,8 @@ def log_return(sec):
 # function that checks how volatile a security is.
 # volatility is calculated through standard deviation. 
 # Volatility shows how often a security goes above or below its standard deviation. 
-def sec_volatility(*sec):
-    data = data_reader(*sec)
+def sec_volatility(sec):
+    data = data_reader(sec)
     sec_returns = logged(shifted(data))
     annual_volatility = sec_returns.std() * 250 ** .5
     return print(f'{annual_volatility * 100}')
