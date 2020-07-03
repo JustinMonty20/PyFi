@@ -137,9 +137,12 @@ class Ui_PyFiUi(object):
         self.retranslateUi(PyFiUi)
         QtCore.QMetaObject.connectSlotsByName(PyFiUi)
 
-        #functionality of the GUI 
+        #functionality of the GUI for single security stocks
         self.Submitsingle.clicked.connect(self.single_sec)
         self.output.setText('')
+
+        #functionality of the GUI for portfolio functions
+        self.submit_folio.clicked.connect(self.folio_secs)
     
     def retranslateUi(self, PyFiUi):
         _translate = QtCore.QCoreApplication.translate
@@ -160,7 +163,7 @@ class Ui_PyFiUi(object):
         self.submit_CAPM.setText(_translate("PyFiUi", "Calculate"))
         self.output.setText(_translate("PyFiUi", "TextLabel"))
 
-    # function that handles submission of the single securities button. 
+    # method on my main GUI that handles submission of the single securities button. 
     def single_sec(self):
         if self.SimpleReturn.isChecked():
             self.output.setText(simple_return(self.Securityinput.text()))
@@ -168,6 +171,16 @@ class Ui_PyFiUi(object):
             self.output.setText(log_return(self.Securityinput.text()))
         else:
             self.output.setText(sec_volatility(self.Securityinput.text()))
+
+    #method on main GUI to handle the click of the submit_folio button
+    def folio_secs(self):
+        weights = self.weights.text().split(',')
+        l_weights = [float(num) for num in weights]
+        l_sec = self.securities.text().split(',')
+        if self.folioReturns.isChecked():
+            self.output.setText(portfolio_return(l_weights,l_sec))
+        elif self.folioVolatility.isChecked():
+            self.output.setText(portfolio_volatility(l_weights,l_sec))
 
 if __name__ == "__main__":
     import sys

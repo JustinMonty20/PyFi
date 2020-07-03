@@ -87,10 +87,10 @@ def portfolio_return(weights,*stocks):
 
 # function that takes the securites in your portfolio by the weight they hold in your portfolio.
 # returns the volatility of your whole portfolio. 
-def portfolio_volatility(weights,*sec):
-    data = data_reader(*sec)
+def portfolio_volatility(weights,secs):
+    data = data_reader(secs)
     sec_returns = logged(shifted(data))
-    if len(weights) == len(sec) and sum(weights) == 1:
+    if len(weights) == len(secs) and sum(weights) == 1.0:
         annual_covariance = sec_returns.cov() * 250
         array_weights = np.array(weights)
         pfolio_volatilty = (np.dot(array_weights.T, np.dot(sec_returns.cov() * 250, array_weights))) ** 0.5
@@ -98,8 +98,8 @@ def portfolio_volatility(weights,*sec):
     else:
          raise error('Make sure your weights add to 1 and the lengths of sec and weights you are passing in are the same.')
 
-# weights = [.5,.4,]
-# portfolio_volatility(weights,'AAPL','MSFT')
+# weights = [.5,.5,]
+# print(portfolio_volatility(weights,'AAPL','MSFT'))
 
 
 
