@@ -15,7 +15,7 @@ class Ui_PyFiUi(object):
     def setupUi(self, PyFiUi):
         PyFiUi.setObjectName("PyFiUi")
         PyFiUi.resize(800, 600)
-        self.singleSecFunctions = QtWidgets.QWidget(PyFiUi)
+        self.singleSecFunctions = QtWidgets.QFrame(PyFiUi)
         self.singleSecFunctions.setEnabled(True)
         self.singleSecFunctions.setGeometry(QtCore.QRect(30, 20, 291, 221))
         self.singleSecFunctions.setObjectName("singleSecFunctions")
@@ -52,7 +52,7 @@ class Ui_PyFiUi(object):
         self.Submitsingle = QtWidgets.QPushButton(self.verticalLayoutWidget_4)
         self.Submitsingle.setObjectName("Submitsingle")
         self.verticalLayout_4.addWidget(self.Submitsingle)
-        self.portfolioFuncs = QtWidgets.QWidget(PyFiUi)
+        self.portfolioFuncs = QtWidgets.QFrame(PyFiUi)
         self.portfolioFuncs.setGeometry(QtCore.QRect(390, 20, 321, 231))
         self.portfolioFuncs.setObjectName("portfolioFuncs")
         self.PortfolioiLabel = QtWidgets.QLabel(self.portfolioFuncs)
@@ -86,7 +86,7 @@ class Ui_PyFiUi(object):
         self.submit_folio = QtWidgets.QPushButton(self.verticalLayoutWidget_5)
         self.submit_folio.setObjectName("submit_folio")
         self.verticalLayout_5.addWidget(self.submit_folio)
-        self.capmFuncs = QtWidgets.QWidget(PyFiUi)
+        self.capmFuncs = QtWidgets.QFrame(PyFiUi)
         self.capmFuncs.setGeometry(QtCore.QRect(30, 270, 411, 261))
         self.capmFuncs.setObjectName("capmFuncs")
         self.label_3 = QtWidgets.QLabel(self.capmFuncs)
@@ -122,6 +122,14 @@ class Ui_PyFiUi(object):
         self.submit_CAPM = QtWidgets.QPushButton(self.verticalLayoutWidget_6)
         self.submit_CAPM.setObjectName("submit_CAPM")
         self.verticalLayout_6.addWidget(self.submit_CAPM)
+        self.output_area = QtWidgets.QFrame(PyFiUi)
+        self.output_area.setGeometry(QtCore.QRect(470, 300, 211, 221))
+        self.output_area.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.output_area.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.output_area.setObjectName("output_area")
+        self.output = QtWidgets.QLabel(self.output_area)
+        self.output.setGeometry(QtCore.QRect(10, 30, 191, 161))
+        self.output.setObjectName("output")
 
         self.retranslateUi(PyFiUi)
         QtCore.QMetaObject.connectSlotsByName(PyFiUi)
@@ -143,6 +151,7 @@ class Ui_PyFiUi(object):
         self.execReturn.setText(_translate("PyFiUi", "Expected Return"))
         self.sharpeRatio.setText(_translate("PyFiUi", "Sharpe Ratio"))
         self.submit_CAPM.setText(_translate("PyFiUi", "Calculate"))
+        self.output.setText(_translate("PyFiUi", "TextLabel"))
 
 
 if __name__ == "__main__":

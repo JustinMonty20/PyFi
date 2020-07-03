@@ -144,9 +144,6 @@ def expected_return(sec,index):
         sec_beta = float(beta(sec,index))
     return risk_free_rate + sec_beta * .05
 
-print(round(expected_return('MSFT','^GSPC'),4))
-
-
 def sharpe_ratio(sec,index):
     if index not in ['^GSPC','^IXIC','^DJI']:
        raise error('use one of the three major indices in the US')
