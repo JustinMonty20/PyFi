@@ -9,6 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from finance_funcs import simple_return,log_return,sec_volatility
+from finance_funcs import portfolio_return,portfolio_volatility
+from finance_funcs import beta,expected_return,sharpe_ratio
 
 
 class Ui_PyFiUi(object):
@@ -134,6 +137,10 @@ class Ui_PyFiUi(object):
         self.retranslateUi(PyFiUi)
         QtCore.QMetaObject.connectSlotsByName(PyFiUi)
 
+        #functionality of the GUI 
+        self.Submitsingle.clicked.connect(self.single_sec)
+        self.output.setText('')
+    
     def retranslateUi(self, PyFiUi):
         _translate = QtCore.QCoreApplication.translate
         PyFiUi.setWindowTitle(_translate("PyFiUi", "PyFi"))
@@ -153,6 +160,14 @@ class Ui_PyFiUi(object):
         self.submit_CAPM.setText(_translate("PyFiUi", "Calculate"))
         self.output.setText(_translate("PyFiUi", "TextLabel"))
 
+    # function that handles submission of the single securities button. 
+    def single_sec(self):
+        if self.SimpleReturn.isChecked():
+            self.output.setText(simple_return(self.Securityinput.text()))
+        elif self.LogReturn.isChecked():
+            self.output.setText(log_return(self.Securityinput.text()))
+        else:
+            self.output.setText(sec_volatility(self.Securityinput.text()))
 
 if __name__ == "__main__":
     import sys

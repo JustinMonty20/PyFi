@@ -40,14 +40,14 @@ def simple_return(sec):
     data = data_reader(sec)
     simple_return = shifted(data) - 1
     simple_annual_return = simple_return.mean() * 250
-    return print(f'{simple_annual_return[sec] * 100:.4f}%')
+    return f'{simple_annual_return[sec] * 100:.4f}%'
 
 def log_return(sec):
     # log returns are better for looking at one security over a period of time.
     data = data_reader(sec)
     log_return = logged(shifted(data))
     log_annual_return = log_return.mean() * 250
-    return print(f'{log_annual_return[sec] * 100:.4f}%')
+    return f'{log_annual_return[sec] * 100:.4f}%'
 
 
 # function that checks how volatile a security is.
@@ -57,7 +57,7 @@ def sec_volatility(sec):
     data = data_reader(sec)
     sec_returns = logged(shifted(data))
     annual_volatility = sec_returns.std() * 250 ** .5
-    return print(f'{annual_volatility * 100}')
+    return f'{annual_volatility * 100}'
 
 # indices are clusters of securities in one place that are usually market indicators.
 # 3 most heard of index funds are dowjones, s&p 500, & nasdaq. 
@@ -69,7 +69,7 @@ def market_indicators(*indices):
     data = data_reader(*indices)
     id_return = (shifted(data)-1)
     annual_id_return = id_return.mean() * 250
-    return print(f'{annual_id_return * 100}')
+    return f'{annual_id_return * 100}'
 
 def portfolio_return(weights,*stocks):
     # function calculates the return of your portfolio based on the stocks you pass in
@@ -79,7 +79,7 @@ def portfolio_return(weights,*stocks):
         p_return= (shifted(data) - 1)
         annual_returns = p_return.mean() * 250
         folio_return = np.dot(annual_returns,weights)
-        return print(f'{folio_return * 100:.4f}%')
+        return f'{folio_return * 100:.4f}%'
     else:
        raise RuntimeError('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
 # weights = [.5,.4]
@@ -94,7 +94,7 @@ def portfolio_volatility(weights,*sec):
         annual_covariance = sec_returns.cov() * 250
         array_weights = np.array(weights)
         pfolio_volatilty = (np.dot(array_weights.T, np.dot(sec_returns.cov() * 250, array_weights))) ** 0.5
-        return print(f'{pfolio_volatilty * 100:.4f} %')
+        return f'{pfolio_volatilty * 100:.4f} %'
     else:
          raise error('Make sure your weights add to 1 and the lengths of sec and weights you are passing in are the same.')
 
