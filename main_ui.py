@@ -143,6 +143,9 @@ class Ui_PyFiUi(object):
 
         #functionality of the GUI for portfolio functions
         self.submit_folio.clicked.connect(self.folio_secs)
+
+        #functionality of the GUI for CAPM functions
+        self.submit_CAPM.clicked.connect(self.capm)
     
     def retranslateUi(self, PyFiUi):
         _translate = QtCore.QCoreApplication.translate
@@ -181,6 +184,17 @@ class Ui_PyFiUi(object):
             self.output.setText(portfolio_return(l_weights,l_sec))
         elif self.folioVolatility.isChecked():
             self.output.setText(portfolio_volatility(l_weights,l_sec))
+
+    #method to calculate the CAPM functions. 
+    def capm(self):
+        security = self.sec_2.text()
+        index = self.lineEdit.text()
+        if self.Beta.isChecked():
+            self.output.setText(beta(security,index))
+        elif self.execReturn.isChecked():
+            self.output.setText(expected_return(security,index))
+        elif self.sharpeRatio.isChecked():
+            self.output.setText(sharpe_ratio(security,index))
 
 if __name__ == "__main__":
     import sys

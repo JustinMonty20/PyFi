@@ -101,8 +101,6 @@ def portfolio_volatility(weights,secs):
 # weights = [.5,.5,]
 # print(portfolio_volatility(weights,'AAPL','MSFT'))
 
-
-
 """ Capital Asset Pricing Model Calculations"""
 """ CAPM describes the realtionship between systematic risk and the expected return for their assets particulary stocks"""
 
@@ -120,7 +118,7 @@ def beta(sec,index):
         cov_with_mkt = cov.iloc[0,1]
         market_var = returns[index].var() * 250
         sec_beta = cov_with_mkt / market_var
-    return sec_beta
+    return f'{sec_beta:.6f}'
 
 # function to webscrape the ten year bond yield and use it as the risk free rate in the beta calculation. 
 def get_risk_free_rate():
@@ -133,7 +131,6 @@ def get_risk_free_rate():
        ten_year_bond_yield = float(rate)
     return (ten_year_bond_yield / 100)
 
-
 # calculates the expected return of a stock. 
 # for this function it calculates the beta of the stock based off of one of the three major indicies in the US. 
 def expected_return(sec,index):
@@ -142,7 +139,7 @@ def expected_return(sec,index):
     else:
         risk_free_rate = get_risk_free_rate()
         sec_beta = float(beta(sec,index))
-    return risk_free_rate + sec_beta * .05
+    return f'{(risk_free_rate + sec_beta * .05) * 100:.6f}'
 
 def sharpe_ratio(sec,index):
     if index not in ['^GSPC','^IXIC','^DJI']:
@@ -151,9 +148,6 @@ def sharpe_ratio(sec,index):
         data = data_reader(sec,index)
         returns = logged(shifted(data))
         sharpe = (expected_return(sec,index) - get_risk_free_rate()) / (returns[sec].std() * 250 ** .05)
-    return sharpe    
-
-
-
+    return f'{sharpe:.6f}'    
 
 
