@@ -196,6 +196,7 @@ class Ui_PyFiUi(object):
         elif self.sharpeRatio.isChecked():
             self.output.setText(sharpe_ratio(security,index))
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

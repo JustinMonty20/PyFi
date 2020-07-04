@@ -33,7 +33,6 @@ def error(str):
     return RuntimeError(str)
 
 """Financial Functions"""
-
 # annual simple return of the passed in security. 
 def simple_return(sec):
     # simple returns on stocks are better for looking at multiple stocks over the same timeframe. 
