@@ -17,7 +17,6 @@ yahoo = 'yahoo'
 # sec stands for security. finance term for a tradeable asset. a stock is a security. 
 # need to pass in the stocks "ticker" aka the abbrevaition on pretty much all trading platforms. 
 """Helper functions for calculations"""
-
 def data_reader(*securities):
     data = pd.DataFrame()
     for item in securities:
@@ -47,7 +46,6 @@ def log_return(sec):
     log_return = logged(shifted(data))
     log_annual_return = log_return.mean() * 250
     return f'{log_annual_return[sec] * 100:.4f}%'
-
 
 # function that checks how volatile a security is.
 # volatility is calculated through standard deviation. 
@@ -81,8 +79,6 @@ def portfolio_return(weights,*stocks):
         return f'{folio_return * 100:.4f}%'
     else:
        raise RuntimeError('Make sure your weights add to 1 and the lengths of stocks and weights you are passing in are the same.')
-# weights = [.5,.4]
-# portfolio_return(weights,'PG','MSFT')
 
 # function that takes the securites in your portfolio by the weight they hold in your portfolio.
 # returns the volatility of your whole portfolio. 
